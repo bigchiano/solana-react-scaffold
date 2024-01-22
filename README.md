@@ -1,5 +1,3 @@
-# LittleBiggy Payments Frontend
-
 ## Run
 
 ```
