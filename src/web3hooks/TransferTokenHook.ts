@@ -3,7 +3,7 @@ import { WalletNotConnectedError } from "@solana/wallet-adapter-base";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, Transaction } from "@solana/web3.js";
 import { useCallback } from "react";
-import { getOrCreateAssociatedTokenAccount } from "../utils/tokenLibs/getOrCreateAssociatedTokenAccount";
+import { getOrCreateAssociatedTokenAccount } from "../utils/token/getOrCreateAssociatedTokenAccount";
 
 export const TransferHook = (
   mintPubkeyString: string,
