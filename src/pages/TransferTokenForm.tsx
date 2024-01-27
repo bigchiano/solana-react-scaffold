@@ -4,9 +4,8 @@ import Button from '../components/templates/button'
 import { TransferHook } from '../web3hooks/TransferTokenHook'
 import { useWallet } from '@solana/wallet-adapter-react'
 
-function TransferForm() {
+function TransferForm({ mintPublickey, setMintPublickey }: any) {
     const [receiverPublickey, setReceiverPublickey] = useState('HBSLiE4KGxjgUz4ddB7cKKSeNGig8oNnYeCVEAs5VHq7')
-    const [mintPublickey, setMintPublickey] = useState('BhMQMCcuNZUiBW8CWFkeSipwYcqEu3Gp939HdrsY37VG')
     const [amount, setAmount] = useState('1')
     const submitHandler = TransferHook(mintPublickey, receiverPublickey, amount)
     const { publicKey } = useWallet();
