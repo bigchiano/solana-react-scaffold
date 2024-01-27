@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import logo from "./logo.svg";
 import MyWallet from "./components/my-wallet";
 import TransferSol from "./pages/TransferForm";
