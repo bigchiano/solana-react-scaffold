@@ -6,7 +6,7 @@
     "tailwind": "npx tailwindcss -i ./src/input.css -o ./src/output.css",
     "tailwind-watch": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch",
     "start": "npm run tailwind && react-app-rewired --openssl-legacy-provider start",
-    "build": "npm run tailwind && react-app-rewired build",
+    "build": "npm run tailwind && react-app-rewired --openssl-legacy-provider build ",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject"
   },
