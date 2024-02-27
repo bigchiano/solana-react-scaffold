@@ -1,7 +1,7 @@
 import { WalletNotConnectedError } from "@solana/wallet-adapter-base";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getOrCreateAssociatedTokenAccount } from "../utils/token/getOrCreateAssociatedTokenAccount";
 
 export const TokenInfoHook = (mintPubkeyString: string) => {
@@ -15,9 +15,8 @@ export const TokenInfoHook = (mintPubkeyString: string) => {
       if (!senderPubKey || !signTransaction)
         throw new WalletNotConnectedError();
 
-      const balance = await connection.getBalance(senderPubKey)
-      setBalance(balance / LAMPORTS_PER_SOL)
-      
+      const balance = await connection.getBalance(senderPubKey);
+      setBalance(balance / LAMPORTS_PER_SOL);
       const tokenAccount = await getOrCreateAssociatedTokenAccount(
         connection,
         senderPubKey,
@@ -29,16 +28,19 @@ export const TokenInfoHook = (mintPubkeyString: string) => {
       if (tokenAccount?.amount) {
         setTokenBalance(Number(tokenAccount?.amount.toString()));
       }
-      
     } catch (error) {
       console.log(error);
     }
   }, [connection, senderPubKey, mintPubkeyString, signTransaction]);
 
-  setInterval(() => {
-    console.log("refreshing...");
-    onClick();
-  }, 6000);
-  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log("refreshing...");
+      onClick();
+    }, 6000);
+
+    return () => clearInterval(interval);
+  }, [onClick]);
+
   return { balance, tokenBalance };
 };

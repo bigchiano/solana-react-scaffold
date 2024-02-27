@@ -4,6 +4,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey, Transaction } from "@solana/web3.js";
 import { useCallback } from "react";
 import { getOrCreateAssociatedTokenAccount } from "../utils/token/getOrCreateAssociatedTokenAccount";
+import { getAccountInfo } from "../utils/token/getAccountInfo";
 
 export const TransferHook = (
   mintPubkeyString: string,
@@ -24,7 +25,11 @@ export const TransferHook = (
       const amount = Number(amountString);
       const mintPubkey = new PublicKey(mintPubkeyString);
       const receiverPubkey = new PublicKey(receiverPubkeyString);
+      let toTokenAccount;
 
+      try {
+        toTokenAccount = await getAccountInfo(connection, receiverPubkey);
+      } catch (error) {}
       // const lamports = await connection.getMinimumBalanceForRentExemption(0);
       const fromTokenAccount = await getOrCreateAssociatedTokenAccount(
         connection,
@@ -36,13 +41,15 @@ export const TransferHook = (
 
       console.log(fromTokenAccount.address.toString());
 
-      const toTokenAccount = await getOrCreateAssociatedTokenAccount(
-        connection,
-        senderPubKey,
-        mintPubkey,
-        receiverPubkey,
-        signTransaction
-      );
+      if (!toTokenAccount) {
+        toTokenAccount = await getOrCreateAssociatedTokenAccount(
+          connection,
+          senderPubKey,
+          mintPubkey,
+          receiverPubkey,
+          signTransaction
+        );
+      }
 
       const transferUsdcToAccIX = createTransferInstruction(
         fromTokenAccount.address,
