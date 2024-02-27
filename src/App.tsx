@@ -8,7 +8,7 @@ import { TokenInfoHook } from "./web3hooks/TokenInfoHook";
 
 function App() {
   const wallet = useWallet();
-  const [mintPublickey, setMintPublickey] = useState('BhMQMCcuNZUiBW8CWFkeSipwYcqEu3Gp939HdrsY37VG')
+  const [mintPublickey, setMintPublickey] = useState('DK6BeYfBvcb7epFnDiEXvqZKVbiPjiV692h7oWoB5P5L')
   const { balance, tokenBalance } = TokenInfoHook(mintPublickey)
 
   return (
@@ -17,7 +17,7 @@ function App() {
         <img src={logo} className="App-logo mx-auto" alt="logo" />
         <h3 className="text-white text-center">
           Transfer Tokens or Sol
-          
+
           {wallet.connected && wallet.publicKey && (
             <div className='text-[20px] mt-[20px]'>
               <p> Sol Balance: {balance.toFixed(2)} </p>
